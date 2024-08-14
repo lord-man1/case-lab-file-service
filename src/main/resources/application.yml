@@ -1,3 +1,22 @@
 spring:
   application:
-    name: case-lab
+    name: ${app_name}
+  datasource:
+    url: jdbc:postgresql://${postgres_host}:${postgres_port}/${postgres_db}?${postgres_params}
+    username: ${postgres_user}
+    password: ${postgres_password}
+    hikari:
+      connection-timeout: ${postgres_timeout}
+      minimum-idle: ${postgres_min_idle}
+      maximum-pool-size: ${postgres_max_pool_size}
+      max-lifetime: 1800000
+      validation-timeout: 3000
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+server:
+  port: ${server_port}}
+  servlet:
+    context-path: v1
+  shutdown: graceful
