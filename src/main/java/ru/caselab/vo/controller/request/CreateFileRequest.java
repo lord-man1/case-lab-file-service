@@ -10,7 +10,7 @@ public record CreateFileRequest(
         @JsonProperty("title")
         String title,
         @JsonProperty("creation_date")
-        LocalDate creationDate,
+        String creationDate,
         @JsonProperty("description")
         String description,
         @JsonProperty("content")

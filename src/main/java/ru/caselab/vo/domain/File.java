@@ -19,7 +19,7 @@ public class File {
     @Column(name = "title")
     private String title;
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private String creationDate;
     @Column(name = "description")
     private String description;
     @Column(name = "content")
