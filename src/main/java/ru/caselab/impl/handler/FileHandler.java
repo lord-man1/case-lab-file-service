@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.caselab.impl.processor.FileProcessor;
 import ru.caselab.vo.controller.response.CreateFileResponse;
 import ru.caselab.vo.controller.response.GetFileResponse;
+import ru.caselab.vo.controller.response.GetFilesResponse;
 import ru.caselab.vo.exception.NoSuchFileException;
 import ru.caselab.vo.meta.CreateFileRequestMeta;
 import ru.caselab.vo.meta.GetFileRequestMeta;
+import ru.caselab.vo.meta.GetFilesRequestMeta;
 
 @Service
 @RequiredArgsConstructor
@@ -24,5 +26,9 @@ public class FileHandler {
         } catch (NoSuchFileException e) {
             return GetFileResponse.error(e.getMessage(), e.getStatus());
         }
+    }
+
+    public GetFilesResponse getFiles(GetFilesRequestMeta meta) {
+        return processor.processGet(meta);
     }
 }

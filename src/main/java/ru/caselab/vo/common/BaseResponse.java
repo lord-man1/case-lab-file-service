@@ -17,7 +17,8 @@ public abstract class BaseResponse {
     protected static final String PROPERTY_STACKTRACE = "stacktrace";
     @JsonIgnore
     protected static final String PROPERTY_EXCEPTION = "exception";
-
+    @JsonIgnore
+    public HttpStatus HTTP_STATUS = HttpStatus.OK;
     @JsonIgnore
     protected Throwable throwable;
 
@@ -25,12 +26,8 @@ public abstract class BaseResponse {
     protected RequestState status;
     @JsonProperty("errors")
     protected List<ErrorMessage> errors;
-    @Setter
     @JsonProperty("data")
     protected Map<String, Object> data = new HashMap<>();
-
-    @JsonIgnore
-    public HttpStatus HTTP_STATUS = HttpStatus.OK;
 
     public BaseResponse() {
     }

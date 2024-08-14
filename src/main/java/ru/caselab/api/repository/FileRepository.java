@@ -6,5 +6,4 @@ import ru.caselab.vo.domain.File;
 
 @Repository
 public interface FileRepository extends JpaRepository<File, String> {
-
 }
