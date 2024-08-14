@@ -3,8 +3,6 @@ package ru.caselab.vo.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "files")
 @Getter
