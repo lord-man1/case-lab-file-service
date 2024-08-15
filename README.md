@@ -115,3 +115,11 @@ POSTGRES_MAX_POOL_SIZE=20
 POSTGRES_TIMEOUT=30000
 POSTGRES_MIN_IDLE=5
 ```
+
+# Пример HTTP-запросов
+
+Импортируйте файл `postman/file-service.postman_collection.json` в `Postman`
+
+<p align="center">
+ <img src="postman/postman.png" alt="postman pic"/>
+</p>
