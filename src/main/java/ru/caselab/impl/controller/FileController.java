@@ -1,5 +1,6 @@
 package ru.caselab.impl.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class FileController {
 
     @PostMapping("")
     private ResponseEntity<CreateFileResponse> createFile(
-            @RequestBody final CreateFileRequest createRequest) {
+            @RequestBody @Valid final CreateFileRequest createRequest) {
         var request = CreateFileRequestMeta.builder()
                 .request(createRequest)
                 .build();
