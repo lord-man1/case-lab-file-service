@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.caselab.impl.orchestration.FileOrchestration;
-import ru.caselab.impl.utils.ServiceUtils;
+import ru.caselab.impl.service.utils.ServiceUtils;
 import ru.caselab.vo.controller.request.CreateFileRequest;
 import ru.caselab.vo.controller.response.CreateFileResponse;
 import ru.caselab.vo.controller.response.GetFileResponse;

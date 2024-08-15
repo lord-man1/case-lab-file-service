@@ -1,4 +1,4 @@
-package ru.caselab.impl.utils;
+package ru.caselab.impl.service.utils;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
