@@ -21,6 +21,7 @@ import ru.caselab.vo.meta.CreateFileRequestMeta;
 import ru.caselab.vo.meta.GetFileRequestMeta;
 import ru.caselab.vo.meta.GetFilesRequestMeta;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +47,6 @@ public class FileControllerTest {
         var request = CreateFileRequest.builder()
                 .title("Title")
                 .description("Description")
-                .creationDate("2020-03-16")
                 .encodedFile("wg13412d")
                 .build();
 
@@ -65,7 +65,7 @@ public class FileControllerTest {
     @DisplayName("корректно получать файл")
     public void testGetFile() throws Exception {
         String fileId = "fileId";
-        File file = new File(fileId, "Test Title", "2020-03-16", "Test Description", "encodedContent");
+        File file = new File(fileId, "Test Title", LocalDateTime.now(), "Test Description", "encodedContent");
         GetFileResponse response = GetFileResponse.success(file);
 
         when(orchestration.orchestrate(any(GetFileRequestMeta.class))).thenReturn(response);
@@ -73,7 +73,6 @@ public class FileControllerTest {
         mockMvc.perform(get("/files/{id}", fileId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.title").value(file.getTitle()))
-                .andExpect(jsonPath("$.data.creation_date").value(file.getCreationDate()))
                 .andExpect(jsonPath("$.data.description").value(file.getDescription()));
     }
 
@@ -81,8 +80,8 @@ public class FileControllerTest {
     @DisplayName("корректно получать файлы")
     public void testGetFiles() throws Exception {
         List<File> files = List.of(
-                new File("fileId1", "Title1", "2020-03-16", "Description1", "encodedContent1"),
-                new File("fileId2", "Title2", "2020-03-16", "Description2", "encodedContent2")
+                new File("fileId1", "Title1", LocalDateTime.now(), "Description1", "encodedContent1"),
+                new File("fileId2", "Title2", LocalDateTime.now(), "Description2", "encodedContent2")
         );
         GetFilesResponse response = GetFilesResponse.success(files);
 

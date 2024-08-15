@@ -1,7 +1,10 @@
 package ru.caselab.vo.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "files")
@@ -17,7 +20,8 @@ public class File {
     @Column(name = "title")
     private String title;
     @Column(name = "creation_date")
-    private String creationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime creationDate;
     @Column(name = "description")
     private String description;
     @Column(name = "content")

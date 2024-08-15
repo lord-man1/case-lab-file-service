@@ -21,6 +21,7 @@ import ru.caselab.vo.meta.CreateFileRequestMeta;
 import ru.caselab.vo.meta.GetFileRequestMeta;
 import ru.caselab.vo.meta.GetFilesRequestMeta;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class FileProcessorTest {
         var request = CreateFileRequest.builder()
                 .title("Title")
                 .description("Description")
-                .creationDate("2020-03-16")
+                .creationDate(LocalDateTime.now())
                 .encodedFile("wg13412d")
                 .build();
 
@@ -55,7 +56,7 @@ public class FileProcessorTest {
                 .request(request)
                 .build();
 
-        File file = new File("fileId", "Test Title", "2020-03-16", "Test Description", "encodedContent");
+        File file = new File("fileId", "Test Title", LocalDateTime.now(), "Test Description", "encodedContent");
 
         when(mapper.requestToEntity(meta.request())).thenReturn(file);
         when(sqlService.save(file)).thenReturn(file);
@@ -73,7 +74,8 @@ public class FileProcessorTest {
     public void testProcessGet() throws NoSuchFileException {
         GetFileRequestMeta meta = new GetFileRequestMeta("fileId");
 
-        File file = new File("fileId", "Test Title", "2020-03-16", "Test Description", "encodedContent");
+        var creationDate = LocalDateTime.now();
+        File file = new File("fileId", "Test Title", creationDate, "Test Description", "encodedContent");
 
         when(sqlService.findById(meta.id())).thenReturn(Optional.of(file));
 
@@ -81,7 +83,7 @@ public class FileProcessorTest {
 
         assertNotNull(response);
         assertEquals("Test Title", response.getData().get("title"));
-        assertEquals("2020-03-16", response.getData().get("creation_date"));
+        assertEquals(creationDate, response.getData().get("creation_date"));
         assertEquals("Test Description", response.getData().get("description"));
         verify(sqlService, times(1)).findById(meta.id());
     }
@@ -92,8 +94,8 @@ public class FileProcessorTest {
     public void testProcessGetFiles() {
         GetFilesRequestMeta meta = new GetFilesRequestMeta(0L, 10L, Sort.Direction.ASC);
         List<File> files = List.of(
-                new File("fileId1", "Title1", "2020-03-16", "Description1", "encodedContent1"),
-                new File("fileId2", "Title2", "2020-03-16", "Description2", "encodedContent2")
+                new File("fileId1", "Title1", LocalDateTime.now(), "Description1", "encodedContent1"),
+                new File("fileId2", "Title2", LocalDateTime.now(), "Description2", "encodedContent2")
         );
 
         when(sqlService.findAllSortedByCreationDate(meta.sort())).thenReturn(files);
