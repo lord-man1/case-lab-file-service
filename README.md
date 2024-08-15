@@ -1,8 +1,56 @@
-# Компиляция и запуск
+# Запуск с помощью `docker/docker-compose`
 
 Для успешного запуска проекта выполните следующие команды:
 
-### Генерация `.jar` файла
+### Удалить сгенерированные/скомпилированные файлы
+
+```bash
+mvn clean
+```
+
+- **clean** — удаляет старые зависимости и `.jar` файлы.
+
+### Собрать `docker image` приложения (подробнее в `./docker/README.md`).
+Выполните команду для сборки образа приложения:
+
+```commandline
+buildah bud --no-cache -f docker/Dockerfile -t case-lab/file-service:local .
+```
+
+ИЛИ
+
+```commandline
+docker build --no-cache -f docker/Dockerfile -t case-lab/file-service:local .
+```
+
+### Запустить `docker-compose` файл
+
+Перейдите в папку `docker`:
+
+```bash
+cd docker/
+```
+
+Далее выполните команду для запуска `docker-compose` файла:
+
+```bash
+docker compose up
+```
+
+# Запуск с помощью `.jar` файла
+### Запустить `PostgreSQL` ([с помощью `docker`](https://habr.com/ru/articles/578744/) или [локально](https://www.baeldung.com/linux/postgresql-start))
+
+Настройки сервиса по умолчанию для подключения к БД (подробнее `src/main/resources/application.yml`):
+
+| Параметр                 | Значение        |
+|--------------------------|-----------------|
+| Хост                     | localhost       |
+| Порт                     | 5432            |
+| Имя БД                   | test_db         |
+| Имя пользователя БД      | test_user       |
+| Пароль пользователя БД   | test_password   |
+
+### Сгенерировать `.jar` файл
 
 ```bash
 mvn clean package
@@ -10,16 +58,6 @@ mvn clean package
 
 - **clean** — удаляет старые зависимости и `.jar` файлы.
 - **package** — создает `.jar` файл, который будет находиться в автоматически сгенерированной папке `target`.
-
-### Копирование файла `.env`
-
-Необходимо скопировать файл `.env` в папку `target`:
-
-```bash
-cp *РАСПОЛОЖЕНИЕ .env ФАЙЛА*/.env *НЫНЕШНЯЯ ДИРЕКТОРИЯ*/target
-```
-
-### Запуск `.jar` файла
 
 Перейдите в папку `target`:
 
@@ -46,32 +84,34 @@ java -jar FileService-0.0.1.jar
 
 Тут же должны задаваться параметры для JVM и другие настройки при запуске.
 
-## .env
+По умолчанию будут применены настройки из `src/main/resources/application.yml`.
 
-- `app_name` — Идентификатор приложения.
-- `server_port` — Порт сервера.
-- `postgres_host` — Хост базы данных PostgreSQL.
-- `postgres_port` — Порт базы данных PostgreSQL.
-- `postgres_db` — Имя базы данных PostgreSQL.
-- `postgres_params` — Параметры подключения к базе данных.
-- `postgres_user` — Имя пользователя базы данных PostgreSQL.
-- `postgres_password` — Пароль пользователя базы данных PostgreSQL.
-- `postgres_max_pool_size` — Максимальный размер, который может достичь пул соединений.
-- `postgres_timeout` — Максимальное количество миллисекунд, в течение которых клиент будет ожидать подключения к PostgreSQL.
-- `postgres_min_idle` — Минимальное количество незанятых соединений, которое HikariCP пытается поддерживать в пуле.
+
+# .env
+
+- `SERVICE_NAME` — Идентификатор приложения.
+- `SERVER_PORT` — Порт сервера.
+- `POSTGRES_HOST` — Хост базы данных PostgreSQL.
+- `POSTGRES_PORT` — Порт базы данных PostgreSQL.
+- `POSTGRES_DB` — Имя базы данных PostgreSQL.
+- `POSTGRES_USER` — Имя пользователя базы данных PostgreSQL.
+- `POSTGRES_PASSWORD` — Пароль пользователя базы данных PostgreSQL.
+- `POSTGRES_MAX_POOL_SIZE` — Максимальный размер, который может достичь пул соединений.
+- `POSTGRES_TIMEOUT` — Максимальное количество миллисекунд, в течение которых клиент будет ожидать подключения к
+  PostgreSQL.
+- `POSTGRES_MIN_IDLE` — Минимальное количество незанятых соединений, которое HikariCP пытается поддерживать в пуле.
 
 ### Пример `.env` файла
-```env
-app_name=TestApp
-server_port=8080
-postgres_host=localhost
-postgres_port=5432
-postgres_db=test_db
-postgres_params=sslmode=disable
-postgres_user=test_user
-postgres_password=test_password
-postgres_max_pool_size=20
-postgres_timeout=30000
-postgres_min_idle=5
-```
 
+```env
+SERVICE_NAME=file-service
+SERVER_PORT=8080
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=test_db
+POSTGRES_USER=test_user
+POSTGRES_PASSWORD=test_password
+POSTGRES_MAX_POOL_SIZE=20
+POSTGRES_TIMEOUT=30000
+POSTGRES_MIN_IDLE=5
+```

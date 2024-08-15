@@ -8,8 +8,9 @@ import ru.caselab.vo.domain.File;
 @ToString(callSuper = true)
 public class GetFileResponse extends BaseResponse {
     private static final String TITLE_PROPERTY = "title";
-    private static final String CREATION_DATE_PROPERTY = "creation_date";
     private static final String DESCRIPTION_PROPERTY = "description";
+    private static final String CREATION_DATE_PROPERTY = "creation_date";
+    private static final String CONTENT_PROPERTY = "content";
 
     public GetFileResponse() {
     }
@@ -19,6 +20,7 @@ public class GetFileResponse extends BaseResponse {
         response.addData(TITLE_PROPERTY, file.getTitle());
         response.addData(CREATION_DATE_PROPERTY, file.getCreationDate());
         response.addData(DESCRIPTION_PROPERTY, file.getDescription());
+        response.addData(CONTENT_PROPERTY, file.getEncodedFile());
 
         return response;
     }

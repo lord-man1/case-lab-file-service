@@ -1,22 +1,23 @@
 spring:
   application:
-    name: ${app_name}
+    name: ${SERVICE_NAME:app}
   datasource:
-    url: jdbc:postgresql://${postgres_host}:${postgres_port}/${postgres_db}?${postgres_params}
-    username: ${postgres_user}
-    password: ${postgres_password}
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:test_db}
+    username: ${POSTGRES_USER:test_user}
+    password: ${POSTGRES_PASSWORD:test_password}
     hikari:
-      connection-timeout: ${postgres_timeout}
-      minimum-idle: ${postgres_min_idle}
-      maximum-pool-size: ${postgres_max_pool_size}
+      connection-timeout: ${POSTGRES_TIMEOUT:30000}
+      minimum-idle: ${POSTGRES_MIN_IDLE:5}
+      maximum-pool-size: ${POSTGRES_MAX_POOL_SIZE:20}
       max-lifetime: 1800000
       validation-timeout: 3000
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
 server:
-  port: ${server_port}}
+  port: ${SERVER_PORT:8080}
   servlet:
-    context-path: v1
+    context-path: /v1
   shutdown: graceful

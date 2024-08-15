@@ -13,7 +13,7 @@
 
 Значение аргумента можно переопределить с помощью параметра `--build-arg` в командах `docker build` и `buildah bud`.
 
-## Сборка контейнера:
+## Сборка образа:
 
 ```commandline
 buildah bud --no-cache -f docker/Dockerfile -t case-lab/file-service:local .
@@ -25,22 +25,24 @@ buildah bud --no-cache -f docker/Dockerfile -t case-lab/file-service:local .
 docker build --no-cache -f docker/Dockerfile -t case-lab/file-service:local .
 ```
 
+P.S. В директории, из которой запускается команда, не должно быть папки `target`
+
 # Запуск
 
 ## Список переменных окружения
 
-Для запуска приложения необходимо задать переменные окружения указанные в README.md корня проекта
+Для запуска приложения необходимо задать переменные окружения указанные в `README.md` корня проекта
 
 ## Запуск контейнера
 
 Запуск приложения по адресу http://localhost:5000:
 
 ```commandline
-podman run -p 5000:5000 -e server_port=5000 case-lab/file-service:local
+podman run -p 5000:5000 -e SERVER_PORT=5000 ... case-lab/file-service:local
 ```
 
 ИЛИ
 
 ```commandline
-docker run -p 5000:5000 -e server_port=5000 case-lab/file-service:local
+docker run -p 5000:5000 -e SERVER_PORT=5000 ... case-lab/file-service:local
 ```

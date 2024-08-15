@@ -46,12 +46,12 @@ public class FileController {
 
     @GetMapping("")
     private ResponseEntity<GetFilesResponse> getFiles(
-            @RequestParam(value = "offset", required = false) long offset,
-            @RequestParam(value = "limit", required = false) long limit,
+            @RequestParam(value = "offset", required = false) Long offset,
+            @RequestParam(value = "limit", required = false) Long limit,
             @RequestParam(value = "sort", required = false) Sort.Direction sortMethod) {
         var request = GetFilesRequestMeta.builder()
-                .offset(offset)
-                .limit(limit != 0 ? limit : 10)
+                .offset(offset != null ? offset : 0)
+                .limit(limit != null ? limit : 10)
                 .sort(sortMethod)
                 .build();
 

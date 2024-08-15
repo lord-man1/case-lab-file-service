@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,9 @@ public abstract class BaseResponse {
     protected Throwable throwable;
 
     @JsonProperty("status")
-    protected RequestState status;
+    protected RequestState status = RequestState.SUCCESS;
     @JsonProperty("errors")
-    protected List<ErrorMessage> errors;
+    protected List<ErrorMessage> errors = new ArrayList<>();
     @JsonProperty("data")
     protected Map<String, Object> data = new HashMap<>();
 
